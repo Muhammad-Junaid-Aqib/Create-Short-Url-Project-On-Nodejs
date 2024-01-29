@@ -11,6 +11,9 @@ const urlScheme = new mongoose.Schema({
         type: String,
         required: true
     },
+    // createdShortLink: {
+    //    type: String, 
+    // },
     visitHistory: [{
         timestamp : {type: Number},
     }],

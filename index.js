@@ -5,7 +5,7 @@ const path = require('path')
 
 const connectToMongoDb = require('./connection')
 const URL = require('./models/url')
-const {restrictToLoginUserOnly,checkAuth} = require('./middleware/auth')
+const {checkForAuthentication, restrictTo} = require('./middleware/auth')
 
 // import routes
 const staticRoute = require('./routes/staticRouter')
@@ -28,12 +28,13 @@ app.set('views', path.resolve('./views'))
 app.use(express.json()) // parse request body as json
 app.use(express.urlencoded({ extended: false })) // parse request body as
 app.use(cookieParser())
+app.use(checkForAuthentication)
 
 // connect route
-app.use('/url', restrictToLoginUserOnly, urlRoute)
+app.use('/url', restrictTo(["NORMAL", "ADMIN"]), urlRoute)
 
 // static routes
-app.use('/', checkAuth, staticRoute)
+app.use('/',  staticRoute)
 
 // user routes
 app.use('/user', userRoute) 

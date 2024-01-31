@@ -25,9 +25,14 @@ const handleUserLogin = async (req, res) => {
         })
     }
 
-    const sessionId = uuidv4()
-    setUser(sessionId, user)
-    res.cookie('uid', sessionId)
+    // for sessions
+    // const sessionId = uuidv4()
+    // setUser(sessionId, user)
+    // res.cookie('uid', sessionId)
+
+    /// for jsonWebToken
+    const token = setUser(user)
+    res.cookie('token', token)
     return res.redirect('/')
 }
 
